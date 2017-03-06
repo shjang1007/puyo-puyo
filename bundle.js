@@ -220,6 +220,7 @@ class Game {
     mainPuyo.markBoardUponLand(this.board);
     adjPuyo.markBoardUponLand(this.board);
     this.board.clearPuyos();
+    this.board.dropToEmptyPos();
     if (mainPuyo.stop && adjPuyo.stop) {
       this.currentPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
     }
@@ -317,11 +318,15 @@ class Board {
   }
 
   openBottomRow(col) {
-    for (let row = this.row - 1; row > 0; row--) {
+    let unoccupiedBottom;
+    for (let row = 0; row < this.row; row++) {
       if (!this.grid[row][col]) {
-        return row;
+        unoccupiedBottom = row;
+      } else {
+        return unoccupiedBottom;
       }
     }
+    return unoccupiedBottom;
   }
 
   drawBoard(ctx) {
@@ -370,13 +375,35 @@ class Board {
       }
 
       if (count >= 4) {
-        puyoToDestroy.forEach((puyo) => (this.grid[puyo.row][puyo.col] = null));
+        puyoToDestroy.forEach((puyoToDelete) => {
+          this.grid[puyoToDelete.row][puyoToDelete.col] = null;
+          const idx = this.puyos.indexOf(puyoToDelete);
+          this.puyos.splice(idx, 1);
+        });
       }
     });
   }
 
   dropToEmptyPos() {
+    this.puyos.forEach( (puyo) => {
+      const { row, col } = puyo;
+      // For puyo already on the bottom, don't bother checking
+      if (row === this.row - 1) return;
 
+      // if puyo's below space is null, then shift the column one down
+      if (!this.grid[row + 1][col]) {
+        for (let i = row; i > 0; i--) {
+          // If the grid is occupied, then
+          // reset the puyo's row to reflect the shift in position
+          if (this.grid[i][col]) {
+            const currentPuyo = this.grid[i][col];
+            currentPuyo.row = i + 1;
+          }
+          this.grid[i + 1][col] = this.grid[i][col];
+        }
+        this.grid[0][col] = null;
+      }
+    });
   }
 }
 
