@@ -84,10 +84,10 @@ class MovingPuyos {
   // Probably can refactor two methods below to one. Something to work on.
   moveDown() {
     if (!this.mainPuyo.stop) {
-      this.mainPuyo.row += 0.05;
+      this.mainPuyo.row += 0.03;
     }
     if (!this.adjPuyo.stop) {
-      this.adjPuyo.row += 0.05;
+      this.adjPuyo.row += 0.03;
     }
   }
 
@@ -105,15 +105,15 @@ class MovingPuyos {
       inBound = (col + nextPos < board.col);
     }
 
-    if (this.nextMoveValid(col + nextPos, row, board)) {
+    if ((row < 0 && col < board.col - 1 && col > 0) ||
+        this.nextMoveValid(col + nextPos, row, board)) {
       mainPuyo.col += nextPos;
       adjPuyo.col += nextPos;
     }
   }
 
   nextMoveValid(col, row, board) {
-    const inBound = (col >= 0 && col < board.col) &&
-                    (row < board.row);
+    const inBound = (col >= 0 && col < board.col) && (row < board.row);
     return (inBound && board.posEmpty(col, Math.ceil(row)));
   }
 
@@ -213,14 +213,13 @@ class Game {
 
   step() {
     const { mainPuyo, adjPuyo } = this.currentPuyos;
-
     this.currentPuyos.moveDown();
 
     // Right now, everytime we go through step, we are calling this.
     // Is this okay? Maybe only call this when ready?
     mainPuyo.markBoardUponLand(this.board);
     adjPuyo.markBoardUponLand(this.board);
-
+    this.board.clearPuyos();
     if (mainPuyo.stop && adjPuyo.stop) {
       this.currentPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
     }
@@ -354,19 +353,30 @@ class Board {
     this.puyos.forEach((puyo) => {
       let count = 1;
       let queue = [puyo];
+      let puyoToDestroy = [puyo];
       let el;
       while (queue.length > 0) {
         el = queue.shift();
         el.neighbors(this).forEach( (pos) => {
-          const neighbor = grid[pos[1][pos[0]]]
-          if (el.color === neighbor.color) {
+          const neighbor = this.grid[pos[1]][pos[0]]
+          if (neighbor &&
+              el.color === neighbor.color &&
+              !puyoToDestroy.includes(neighbor)) {
             count += 1;
             queue.push(neighbor);
+            puyoToDestroy.push(neighbor);
           }
         });
+      }
 
+      if (count >= 4) {
+        puyoToDestroy.forEach((puyo) => (this.grid[puyo.row][puyo.col] = null));
       }
     });
+  }
+
+  dropToEmptyPos() {
+
   }
 }
 
@@ -469,7 +479,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //  canvasBoard.width = Game.DIM_X;
   //  canvasBoard.height = Game.DIM_Y;
-
    const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */]();
    document.addEventListener("keydown", game.handleKeyDown);
    new __WEBPACK_IMPORTED_MODULE_1__game_view__["a" /* default */](game, ctx).play();
