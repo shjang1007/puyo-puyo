@@ -212,7 +212,8 @@ class MovingPuyos {
 class Game {
   constructor(ctx) {
     this.board = new __WEBPACK_IMPORTED_MODULE_1__board__["a" /* default */]();
-    this.currentPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
+    this.nextPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
+    this.currentPuyos = null;
     this.ctx = ctx;
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -225,6 +226,7 @@ class Game {
   }
 
   step() {
+    this.currentPuyos = this.nextPuyos;
     const { mainPuyo, adjPuyo } = this.currentPuyos;
     this.currentPuyos.moveDown();
 
@@ -232,10 +234,11 @@ class Game {
     // Is this okay? Maybe only call this when ready?
     mainPuyo.markBoardUponLand(this.board);
     adjPuyo.markBoardUponLand(this.board);
+
     this.board.clearPuyos();
     this.board.dropToEmptyPos();
     if (mainPuyo.stop && adjPuyo.stop) {
-      this.currentPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
+      this.nextPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
     }
   }
 
