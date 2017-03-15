@@ -374,8 +374,18 @@ class Board {
       for (let col = 0; col < this.col; col++) {
         if (this.occupied(col, row)) {
           ctx.beginPath();
+
+          const radialGradient = ctx.createRadialGradient(col * 40 + 18,
+                                                          row * 40 + 18,
+                                                          1,
+                                                          col * 40 + 20,
+                                                          row * 40 + 20,
+                                                          20);
+          radialGradient.addColorStop(0, "white");
+          radialGradient.addColorStop(1, this.grid[row][col].color);
+
           ctx.arc(col * 40 + 20, row * 40 + 20, 20, 0, Math.PI * 2);
-          ctx.fillStyle = this.grid[row][col].color;
+          ctx.fillStyle = radialGradient;
           ctx.fill();
           ctx.closePath();
         } else {
@@ -495,8 +505,19 @@ class SinglePuyo {
   drawPuyo(ctx) {
     const { row, col, color } = this;
     ctx.beginPath();
+
+    const radialGradient = ctx.createRadialGradient(col * 40 + 18,
+                                                    row * 40 + 18,
+                                                    1, 
+                                                    col * 40 + 20,
+                                                    row * 40 + 20,
+                                                    20);
+    radialGradient.addColorStop(0, "white");
+    radialGradient.addColorStop(1, color);
+
+
     ctx.arc(col * 40 + 20, row * 40 + 20, 20, 0, Math.PI * 2);
-    ctx.fillStyle = color;
+    ctx.fillStyle = radialGradient;
     ctx.fill();
     ctx.closePath();
   }
