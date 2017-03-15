@@ -285,8 +285,8 @@ class Game {
   }
 }
 
-Game.DIM_X = 300;
-Game.DIM_Y = 600;
+Game.DIM_X = 240;
+Game.DIM_Y = 480;
 
 /* harmony default export */ __webpack_exports__["a"] = Game;
 
@@ -374,17 +374,17 @@ class Board {
       for (let col = 0; col < this.col; col++) {
         if (this.occupied(col, row)) {
           ctx.beginPath();
-          ctx.arc(col * 50 + 25, row * 50 + 25, 25, 0, Math.PI * 2);
+          ctx.arc(col * 40 + 20, row * 40 + 20, 20, 0, Math.PI * 2);
           ctx.fillStyle = this.grid[row][col].color;
           ctx.fill();
           ctx.closePath();
         } else {
           ctx.fillStyle = "white";
-          ctx.fillRect(col * 50, row * 50, 50, 50);
+          ctx.fillRect(col * 40, row * 40, 40, 40);
         }
         ctx.strokeStyle = "black";
-        ctx.lineWidth = 0.5;
-        ctx.strokeRect(col * 50, row * 50, 50, 50);
+        ctx.lineWidth = 0.22;
+        ctx.strokeRect(col * 40, row * 40, 40, 40);
       }
     }
   }
@@ -495,7 +495,7 @@ class SinglePuyo {
   drawPuyo(ctx) {
     const { row, col, color } = this;
     ctx.beginPath();
-    ctx.arc(col * 50 + 25, row * 50 + 25, 25, 0, Math.PI * 2);
+    ctx.arc(col * 40 + 20, row * 40 + 20, 20, 0, Math.PI * 2);
     ctx.fillStyle = color;
     ctx.fill();
     ctx.closePath();
