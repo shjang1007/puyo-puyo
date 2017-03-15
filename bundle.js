@@ -127,6 +127,12 @@ class MovingPuyos {
     const { mainPuyo, adjPuyo } = this;
     const { col, row } = mainPuyo;
 
+    // Handle edge case where both side is occupied.
+    if (!this.nextMoveValid(col - 1, Math.ceil(row) ,board) &&
+        !this.nextMoveValid(col + 1, Math.ceil(row), board)) {
+      return;
+    }
+
     // Case statements to handle 4 types of rotations
     switch (this.pattern) {
       case 1:
@@ -405,6 +411,8 @@ class Board {
   }
 
   dropToEmptyPos() {
+    let clearPuyos = false;
+
     this.puyos.forEach( (puyo) => {
       const { row, col } = puyo;
       // For puyo already on the bottom, don't bother checking
@@ -412,6 +420,7 @@ class Board {
 
       // if puyo's below space is null, then shift the column one down
       if (!this.grid[row + 1][col]) {
+        clearPuyos = true;
         for (let i = row; i > 0; i--) {
           // If the grid is occupied, then
           // reset the puyo's row to reflect the shift in position
@@ -424,6 +433,31 @@ class Board {
         this.grid[0][col] = null;
       }
     });
+    this.puyos.forEach( (puyo) => {
+      const { row, col } = puyo;
+      // For puyo already on the bottom, don't bother checking
+      if (row === this.row - 1) return;
+
+      // if puyo's below space is null, then shift the column one down
+      if (!this.grid[row + 1][col]) {
+        clearPuyos = false;
+        for (let i = row; i > 0; i--) {
+          // If the grid is occupied, then
+          // reset the puyo's row to reflect the shift in position
+          if (this.grid[i][col]) {
+            const currentPuyo = this.grid[i][col];
+            currentPuyo.row = i + 1;
+          }
+          this.grid[i + 1][col] = this.grid[i][col];
+        }
+        this.grid[0][col] = null;
+      }
+    });
+    this.clearPuyos();
+
+    if (clearPuyos) {
+      this.dropToEmptyPos();
+    }
   }
 }
 
