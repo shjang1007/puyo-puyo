@@ -221,8 +221,13 @@ class Game {
     this.nextPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
     this.currentPuyos = null;
     this.ctx = ctx;
+    this.paused = false;
+
+    const button = document.getElementById("pause-button");
+    button.addEventListener("click", this.togglePauseButton);
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.togglePauseButton = this.togglePauseButton.bind(this);
   }
 
   gameOver(reqAnimationId) {
@@ -232,19 +237,29 @@ class Game {
   }
 
   step() {
-    this.currentPuyos = this.nextPuyos;
-    const { mainPuyo, adjPuyo } = this.currentPuyos;
-    this.currentPuyos.moveDown();
+    if (!this.paused) {
+      this.currentPuyos = this.nextPuyos;
+      const { mainPuyo, adjPuyo } = this.currentPuyos;
+      this.currentPuyos.moveDown();
 
-    // Right now, everytime we go through step, we are calling this.
-    // Is this okay? Maybe only call this when ready?
-    mainPuyo.markBoardUponLand(this.board);
-    adjPuyo.markBoardUponLand(this.board);
+      // Right now, everytime we go through step, we are calling this.
+      // Is this okay? Maybe only call this when ready?
+      mainPuyo.markBoardUponLand(this.board);
+      adjPuyo.markBoardUponLand(this.board);
 
-    this.board.clearPuyos();
-    this.board.dropToEmptyPos();
-    if (mainPuyo.stop && adjPuyo.stop) {
-      this.nextPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
+      this.board.clearPuyos();
+      this.board.dropToEmptyPos();
+      if (mainPuyo.stop && adjPuyo.stop) {
+        this.nextPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
+      }
+    }
+  }
+
+  togglePauseButton() {
+    if (this.paused) {
+      this.paused = false
+    } else {
+      this.paused = true
     }
   }
 
@@ -255,9 +270,8 @@ class Game {
   }
 
   handleKeyDown(e) {
-    // Checks to see if either puyo has landed. Upon on landing,
-    // disable any moves functionality
-    if (this.currentPuyos.disableMoves()) return;
+    // If puyo landed or the game is paused, disable moves
+    if (this.currentPuyos.disableMoves() || this.paused) return;
 
     if (e.which === 39) {
       this.currentPuyos.move("right", this.board);
@@ -562,6 +576,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //  canvasBoard.height = Game.DIM_Y;
    const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */]();
    document.addEventListener("keydown", game.handleKeyDown);
+   const pauseButton = document.getElementById("pause-button");
+   pauseButton.addEventListener("mousedown", game.togglePauseButton);
    new __WEBPACK_IMPORTED_MODULE_1__game_view__["a" /* default */](game, ctx).play();
 });
 

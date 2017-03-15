@@ -1,7 +1,31 @@
 #puyo-canvas {
-  padding: 0;
-  margin: 0;
   background: white;
-  display: block;
-  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+header > ul {
+  display: flex;
+  justify-content: space-around;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  display: flex;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+footer > ul {
+  display: flex;
 }

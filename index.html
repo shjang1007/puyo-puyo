@@ -15,13 +15,82 @@
 
     <!-- favicon -->
     <link rel="short icon" href="img/favicon.ico">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
   </head>
   <body>
-    <canvas id="puyo-canvas"></canvas>
-    <ul>
-      <li>keyboard arrow right and left to move</li>
-      <li>Space to rotate</li>
-      <li>keyboard arrow down to quick drop</li>
-    </ul>
+    <header>
+      <div class="name">
+        Brian Sungho Jang
+      </div>
+      <ul>
+        <li>
+          <a href="https://github.com/shjang1007">
+          <i class="fa fa-github fa-fw fa-1x"></i> Github
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/briansjang">
+            <i class="fa fa-linkedin fa-fw fa-1x"></i> LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href="http://brianjang.us/">
+            <i class="fa fa-folder-o fa-fw fa-1x"></i>Portfolio
+          </a>
+        </li>
+      </ul>
+    </header>
+    <section class="title">
+      Puyo Puyo
+    </section>
+    <main>
+      <section class="instruction-container">
+        <ul>
+          <li>The goal is simple. Survive as long as you can!</li>
+          <li>Four or more of the same color bubbles to clear them</li>
+          <li>As time goes, the speed of the puyos dropping will get faster</li>
+          <li>Good luck!</li>
+        </ul>
+      </section>
+      <canvas id="puyo-canvas"></canvas>
+      <section class="game-info-container">
+        <button type="button" id="pause-button">PAUSE</button>
+        <div class="score-board">
+          109809
+        </div>
+        <div class="next-piece-board">
+          NEXT PIECE
+        </div>
+        <div class="keys-instruction">
+          <ul>
+            <li>Right and Left arrows to move right or left</li>
+            <li>Down arrow to instantly drop Puyos</li>
+            <li>Space bar to rotate Puyos</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <ul>
+        <li>
+          <a href="https://github.com/shjang1007">
+          <i class="fa fa-github fa-fw fa-1x"></i> Github
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/briansjang">
+            <i class="fa fa-linkedin fa-fw fa-1x"></i> LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href="http://brianjang.us/">
+            <i class="fa fa-folder-o fa-fw fa-1x"></i>Portfolio
+          </a>
+        </li>
+      </ul>
+    </footer>
   </body>
 </html>
