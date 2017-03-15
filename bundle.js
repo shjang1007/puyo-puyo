@@ -83,11 +83,17 @@ class MovingPuyos {
 
   // Probably can refactor two methods below to one. Something to work on.
   moveDown() {
+    let speed = 0.03;
+
     if (!this.mainPuyo.stop) {
-      this.mainPuyo.row += 0.03;
+      this.mainPuyo.row += speed;
+    } else {
+      this.adjPuyo.row += 0.15;
     }
     if (!this.adjPuyo.stop) {
-      this.adjPuyo.row += 0.03;
+      this.adjPuyo.row += speed;
+    } else {
+      this.mainPuyo.row += 0.15;
     }
   }
 
@@ -120,9 +126,6 @@ class MovingPuyos {
   rotate(board) {
     const { mainPuyo, adjPuyo } = this;
     const { col, row } = mainPuyo;
-
-    // If either puyo lands, no more rotate;
-    if (mainPuyo.stop || adjPuyo.stop) return;
 
     // Case statements to handle 4 types of rotations
     switch (this.pattern) {
@@ -167,8 +170,10 @@ class MovingPuyos {
     }
   }
 
+  // Find the most bottom open space, and drops puyos to those spots
   quickDrop(board) {
     const { mainPuyo, adjPuyo } = this;
+
     if (mainPuyo.col === adjPuyo.col) {
       const bottomPuyo = mainPuyo.row > adjPuyo.row ? mainPuyo : adjPuyo;
       const topPuyo = bottomPuyo === mainPuyo ? adjPuyo: mainPuyo;
@@ -183,6 +188,11 @@ class MovingPuyos {
   drawPuyos(ctx) {
     this.mainPuyo.drawPuyo(ctx);
     this.adjPuyo.drawPuyo(ctx);
+  }
+
+  disableMoves() {
+    const { mainPuyo, adjPuyo } = this;
+    return (mainPuyo.stop || adjPuyo.stop);
   }
 }
 
@@ -236,6 +246,10 @@ class Game {
   }
 
   handleKeyDown(e) {
+    // Checks to see if either puyo has landed. Upon on landing,
+    // disable any moves functionality
+    if (this.currentPuyos.disableMoves()) return;
+
     if (e.which === 39) {
       this.currentPuyos.move("right", this.board);
     } else if (e.which === 37) {
