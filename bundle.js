@@ -368,7 +368,7 @@ class Board {
     }
     return unoccupiedBottom;
   }
-
+  //this method is too long brian!
   drawBoard(ctx) {
     for (let row = 0; row < this.row; row++) {
       for (let col = 0; col < this.col; col++) {

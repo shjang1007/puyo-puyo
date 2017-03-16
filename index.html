@@ -18,7 +18,8 @@
 
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Days+One" rel="stylesheet">
   </head>
   <body>
     <header>
@@ -28,7 +29,7 @@
       <ul>
         <li>
           <a href="https://github.com/shjang1007">
-          <i class="fa fa-github fa-fw fa-1x"></i> Github
+            <i class="fa fa-github fa-fw fa-1x"></i> Github
           </a>
         </li>
         <li>
@@ -48,28 +49,36 @@
     </section>
     <main>
       <section class="instruction-container">
-        <ul>
-          <li>The goal is simple. Survive as long as you can!</li>
-          <li>Four or more of the same color bubbles to clear them</li>
-          <li>As time goes, the speed of the puyos dropping will get faster</li>
-          <li>Good luck!</li>
+        <div class="instruction-content">
+          <div class="play-symbol">
+            <i class="fa fa-gamepad fa-fw fa-2x"></i> How to play
+          </div>
+          <ul class="drop-down-instruction">
+            <li>The goal is simple. Survive as long as you can!</li>
+            <li>Four or more of the same color bubbles to clear them</li>
+            <li>As time goes, the speed of the puyos dropping will get faster</li>
+            <li>Good luck!</li>
+          </ul>
+        </div>
+        <ul class="keys-instruction">
+          <li>Right and Left arrows to move right or left</li>
+          <li>Down arrow to instantly drop Puyos</li>
+          <li>Space bar to rotate Puyos</li>
         </ul>
       </section>
-      <canvas id="puyo-canvas"></canvas>
+      <section class="puyo-container">
+        <canvas id="puyo-canvas"></canvas>
+      </section>
       <section class="game-info-container">
-        <button type="button" id="pause-button">PAUSE</button>
+        <button type="button" id="pause-button">
+          <i class="fa fa-pause-circle-o fa-fw fa-5x"></i>
+          <!-- <i class="fa fa-play-circle-o fa-fw fa-3x"></i>  -->
+        </button>
         <div class="score-board">
           109809
         </div>
         <div class="next-piece-board">
           NEXT PIECE
-        </div>
-        <div class="keys-instruction">
-          <ul>
-            <li>Right and Left arrows to move right or left</li>
-            <li>Down arrow to instantly drop Puyos</li>
-            <li>Space bar to rotate Puyos</li>
-          </ul>
         </div>
       </section>
     </main>
@@ -77,7 +86,7 @@
       <ul>
         <li>
           <a href="https://github.com/shjang1007">
-          <i class="fa fa-github fa-fw fa-1x"></i> Github
+            <i class="fa fa-github fa-fw fa-1x"></i> Github
           </a>
         </li>
         <li>
