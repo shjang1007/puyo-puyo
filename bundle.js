@@ -82,9 +82,7 @@ class MovingPuyos {
   }
 
   // Probably can refactor two methods below to one. Something to work on.
-  moveDown() {
-    let speed = 0.03;
-
+  moveDown(speed) {
     if (!this.mainPuyo.stop) {
       this.mainPuyo.row += speed;
     } else {
@@ -228,6 +226,7 @@ class Game {
     this.ctx = ctx;
     this.paused = false;
     this.over = false;
+    this.speed = 0.03;
 
     const button = document.getElementById("pause-button");
     button.addEventListener("click", this.togglePauseButton);
@@ -239,8 +238,12 @@ class Game {
   }
 
   gameOver() {
+    const { ctx } = this;
     if (this.board.occupied(3, 0)) {
       this.over = true;
+      ctx.fillStyle = "orange";
+      ctx.font = "36px Arial";
+      ctx.fillText("GAME OVER", 10, Game.DIM_Y / 2);
     }
   }
 
@@ -249,6 +252,7 @@ class Game {
     this.currentPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
     this.nextPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
     this.over = false;
+    this.speed = 0.03;
   }
 
   step() {
@@ -259,7 +263,11 @@ class Game {
       }
 
       const { mainPuyo, adjPuyo } = this.currentPuyos;
-      this.currentPuyos.moveDown();
+      if (this.speed < 0.13) {
+        this.speed += 0.00005;
+      }
+
+      this.currentPuyos.moveDown(this.speed);
 
       // Right now, everytime we go through step, we are calling this.
       // Is this okay? Maybe only call this when ready?
@@ -661,7 +669,7 @@ document.addEventListener("DOMContentLoaded", () => {
   nextPuyoCanvasEl.width = 50;
   nextPuyoCanvasEl.height = 100;
 
-  const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */]();
+  const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */](ctx);
   document.addEventListener("keydown", game.handleKeyDown);
 
   const pauseButton = document.getElementById("pause-button");
