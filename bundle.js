@@ -196,6 +196,11 @@ class MovingPuyos {
     this.adjPuyo.drawPuyo(ctx);
   }
 
+  drawNextPuyos(nextPuyoCtx) {
+    this.mainPuyo.drawNextPuyo(nextPuyoCtx, 25, 30, this.mainPuyo.color);
+    this.adjPuyo.drawNextPuyo(nextPuyoCtx, 25, 70, this.adjPuyo.color);
+  }
+
   disableMoves() {
     const { mainPuyo, adjPuyo } = this;
     return (mainPuyo.stop || adjPuyo.stop);
@@ -238,7 +243,10 @@ class Game {
 
   step() {
     if (!this.paused) {
-      this.currentPuyos = this.nextPuyos;
+      if (!this.currentPuyos) {
+        this.currentPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
+      }
+
       const { mainPuyo, adjPuyo } = this.currentPuyos;
       this.currentPuyos.moveDown();
 
@@ -250,6 +258,7 @@ class Game {
       this.board.clearPuyos();
       this.board.dropToEmptyPos();
       if (mainPuyo.stop && adjPuyo.stop) {
+        this.currentPuyos = this.nextPuyos;
         this.nextPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
       }
     }
@@ -258,18 +267,21 @@ class Game {
   togglePauseButton(e) {
     if (this.paused) {
       this.paused = false;
-      $(e.target).replaceWith('<i class="fa fa-pause-circle-o fa-fw fa-4x"></i>')
+      $(e.target)
+        .replaceWith('<i class="fa fa-pause-circle-o fa-fw fa-4x"></i>');
     } else {
       this.paused = true;
-      $(e.target).replaceWith('<i class="fa fa-play-circle-o fa-fw fa-4x"></i>')
+      $(e.target)
+        .replaceWith('<i class="fa fa-play-circle-o fa-fw fa-4x"></i>');
 
     }
   }
 
-  draw(ctx) {
+  draw(ctx, nextPuyoCtx) {
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
     this.board.drawBoard(ctx);
     this.currentPuyos.drawPuyos(ctx);
+    this.nextPuyos.drawNextPuyos(nextPuyoCtx);
   }
 
   handleKeyDown(e) {
@@ -303,16 +315,16 @@ Game.DIM_Y = 480;
 // import MovingPuyo from "./movingPuyo";
 
 class GameView {
-  constructor(game, ctx) {
+  constructor(game, ctx, nextPuyoCtx) {
     this.game = game;
     this.ctx = ctx;
-
+    this.nextPuyoCtx = nextPuyoCtx;
     this.play = this.play.bind(this);
   }
 
   play() {
     this.game.step();
-    this.game.draw(this.ctx);
+    this.game.draw(this.ctx, this.nextPuyoCtx);
 
     const gameStart = requestAnimationFrame(this.play);
 
@@ -511,7 +523,7 @@ class SinglePuyo {
 
     const radialGradient = ctx.createRadialGradient(col * 40 + 18,
                                                     row * 40 + 18,
-                                                    1, 
+                                                    1,
                                                     col * 40 + 20,
                                                     row * 40 + 20,
                                                     20);
@@ -523,6 +535,26 @@ class SinglePuyo {
     ctx.fillStyle = radialGradient;
     ctx.fill();
     ctx.closePath();
+  }
+
+  drawNextPuyo(nextPuyoCtx, x, y, color) {
+    nextPuyoCtx.beginPath();
+
+    const radialGradient = nextPuyoCtx.createRadialGradient(x - 4,
+                                                            y - 4,
+                                                            1,
+                                                            x,
+                                                            y,
+                                                            20);
+
+    radialGradient.addColorStop(0, "white");
+    radialGradient.addColorStop(1, color);
+
+
+    nextPuyoCtx.arc(x, y, 20, 0, Math.PI * 2);
+    nextPuyoCtx.fillStyle = radialGradient;
+    nextPuyoCtx.fill();
+    nextPuyoCtx.closePath();
   }
 
   reachedBottom(board) {
@@ -586,23 +618,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 document.addEventListener("DOMContentLoaded", () => {
   const canvasEl = document.getElementById("puyo-canvas");
+  const nextPuyoCanvasEl = document.getElementById("next-puyo-canvas");
+
   const ctx = canvasEl.getContext("2d");
+  const nextPuyoCtx = nextPuyoCanvasEl.getContext("2d");
+
   canvasEl.width = __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */].DIM_X;
   canvasEl.height = __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */].DIM_Y;
 
-  //
-  // const MovingPuyo = new MovingPuyo(ctx);
-  // document.addEventListener("keyup", MovingPuyo.handleKeyUp);
-  //
-  // setInterval(MovingPuyo.draw(ctx), 50);
+  nextPuyoCanvasEl.width = 50;
+  nextPuyoCanvasEl.height = 100;
 
-  //  canvasBoard.width = Game.DIM_X;
-  //  canvasBoard.height = Game.DIM_Y;
-   const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */]();
-   document.addEventListener("keydown", game.handleKeyDown);
-   const pauseButton = document.getElementById("pause-button");
-   pauseButton.addEventListener("mousedown", game.togglePauseButton);
-   new __WEBPACK_IMPORTED_MODULE_1__game_view__["a" /* default */](game, ctx).play();
+  const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */]();
+  document.addEventListener("keydown", game.handleKeyDown);
+  const pauseButton = document.getElementById("pause-button");
+  pauseButton.addEventListener("mousedown", game.togglePauseButton);
+  new __WEBPACK_IMPORTED_MODULE_1__game_view__["a" /* default */](game, ctx, nextPuyoCtx).play();
 });
 
 

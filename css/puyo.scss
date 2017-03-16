@@ -2,6 +2,10 @@
   background: white;
 }
 
+#next-puyo-canvas {
+  background: white;
+}
+
 body {
 
 }
@@ -134,12 +138,6 @@ footer > ul > li {
   padding: 10px 20px;
   background: #ffc300;
   border-radius: 11px;
-}
-
-.next-piece-board {
-  width: 80px;
-  height: 80px;
-  background: white;
 }
 
 .keys-instruction {
