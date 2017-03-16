@@ -22,84 +22,100 @@
     <link href="https://fonts.googleapis.com/css?family=Days+One" rel="stylesheet">
   </head>
   <body>
-    <header>
-      <div class="name">
-        Brian Sungho Jang
-      </div>
-      <ul>
-        <li>
-          <a href="https://github.com/shjang1007">
-            <i class="fa fa-github fa-fw fa-1x"></i> Github
-          </a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/briansjang">
-            <i class="fa fa-linkedin fa-fw fa-1x"></i> LinkedIn
-          </a>
-        </li>
-        <li>
-          <a href="http://brianjang.us/">
-            <i class="fa fa-folder-o fa-fw fa-1x"></i>Portfolio
-          </a>
-        </li>
-      </ul>
-    </header>
-    <section class="title">
-      Puyo Puyo
-    </section>
-    <main>
-      <section class="instruction-container">
-        <div class="instruction-content">
-          <div class="play-symbol">
-            <i class="fa fa-gamepad fa-fw fa-2x"></i> How to play
-          </div>
-          <ul class="drop-down-instruction">
-            <li>The goal is simple. Survive as long as you can!</li>
-            <li>Four or more of the same color bubbles to clear them</li>
-            <li>As time goes, the speed of the puyos dropping will get faster</li>
-            <li>Good luck!</li>
-          </ul>
+    <section class="whole-container">
+      <header>
+        <div class="name">
+          Brian Sungho Jang
         </div>
-        <ul class="keys-instruction">
-          <li>Right and Left arrows to move right or left</li>
-          <li>Down arrow to instantly drop Puyos</li>
-          <li>Space bar to rotate Puyos</li>
+        <ul>
+          <li>
+            <a href="https://github.com/shjang1007">
+              <i class="fa fa-github fa-fw fa-1x"></i>Github
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/briansjang">
+              <i class="fa fa-linkedin fa-fw fa-1x"></i>LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="http://brianjang.us/">
+              <i class="fa fa-folder-o fa-fw fa-1x"></i>Portfolio
+            </a>
+          </li>
         </ul>
+      </header>
+      <section class="title">
+        Puyo Puyo
       </section>
-      <section class="puyo-container">
-        <canvas id="puyo-canvas"></canvas>
-      </section>
-      <section class="game-info-container">
-        <button type="button" id="pause-button">
-          <i class="fa fa-pause-circle-o fa-fw fa-5x"></i>
-          <!-- <i class="fa fa-play-circle-o fa-fw fa-3x"></i>  -->
-        </button>
-        <div class="score-board">
-          109809
-        </div>
-        <div class="next-piece-board">
-          NEXT PIECE
-        </div>
-      </section>
-    </main>
-    <footer>
-      <ul>
-        <li>
-          <a href="https://github.com/shjang1007">
-            <i class="fa fa-github fa-fw fa-1x"></i> Github
-          </a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/briansjang">
-            <i class="fa fa-linkedin fa-fw fa-1x"></i> LinkedIn
-          </a>
-        </li>
-        <li>
-          <a href="http://brianjang.us/">
-            <i class="fa fa-folder-o fa-fw fa-1x"></i>Portfolio
-          </a>
-        </li>
-      </ul>
-    </footer>
+      <main>
+        <section class="instruction-container">
+          <ul class="keys-instruction">
+            <li>
+              <i class="fa fa-keyboard-o fa-fw fa-2x"></i> Key
+            </li>
+            <li>
+              <i class="fa fa-arrow-left fa-fw fa-1x"></i>: Move left
+            </li>
+            <li>
+              <i class="fa fa-arrow-right fa-fw fa-1x"></i>: Move right
+            </li>
+            <li>
+              <i class="fa fa-arrow-down fa-fw fa-1x"></i>: Quick Drop
+            </li>
+            <li>
+              " " : Rotate Puyos
+            </li>
+          </ul>
+          <div class="instruction-content">
+            <div class="play-symbol">
+              <i class="fa fa-gamepad fa-fw fa-2x"></i> How to play
+            </div>
+            <ul class="drop-down-instruction">
+              <li>The goal is simple. Survive as long as you can!</li>
+              <br>
+              <li>Four or more of the same color bubbles to clear them</li>
+              <br>
+              <li>As time goes, the speed of the puyos dropping will get faster</li>
+              <br>
+              <li>Good luck!</li>
+            </ul>
+          </div>
+        </section>
+        <section class="puyo-container">
+          <canvas id="puyo-canvas"></canvas>
+        </section>
+        <section class="game-info-container">
+          <button type="button" id="pause-button">
+            <i class="fa fa-pause-circle-o fa-fw fa-4x"></i>
+          </button>
+          <div class="score-board">
+            109809
+          </div>
+          <div class="next-piece-board">
+            NEXT PIECE
+          </div>
+        </section>
+      </main>
+      <footer>
+        <ul>
+          <li>
+            <a href="https://github.com/shjang1007">
+              <i class="fa fa-github fa-fw fa-1x"></i>Github
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/briansjang">
+              <i class="fa fa-linkedin fa-fw fa-1x"></i>LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="http://brianjang.us/">
+              <i class="fa fa-folder-o fa-fw fa-1x"></i>Portfolio
+            </a>
+          </li>
+        </ul>
+      </footer>
+    </section>
   </body>
 </html>

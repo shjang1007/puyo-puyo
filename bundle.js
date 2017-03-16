@@ -255,11 +255,14 @@ class Game {
     }
   }
 
-  togglePauseButton() {
+  togglePauseButton(e) {
     if (this.paused) {
-      this.paused = false
+      this.paused = false;
+      $(e.target).replaceWith('<i class="fa fa-pause-circle-o fa-fw fa-4x"></i>')
     } else {
-      this.paused = true
+      this.paused = true;
+      $(e.target).replaceWith('<i class="fa fa-play-circle-o fa-fw fa-4x"></i>')
+
     }
   }
 
