@@ -86,15 +86,28 @@
           <canvas id="puyo-canvas"></canvas>
         </section>
         <section class="game-info-container">
-          <button type="button" id="pause-button">
-            <i class="fa fa-pause-circle-o fa-fw fa-4x"></i>
-          </button>
-          <div class="score-board">
-            109809
-          </div>
-          <div class="next-piece-board">
-            <canvas id="next-puyo-canvas"></canvas>
-          </div>
+          <ul class="buttons">
+            <button type="button" id="pause-button">
+              <i class="fa fa-pause-circle-o fa-fw fa-4x"></i>
+            </button>
+            <button type="button" id="restart-button">
+              <div class="restart-text">
+                Restart
+              </div>
+              <i class="fa fa-power-off fa-fw fa-4x"></i>
+            </button>
+          </ul>
+          <section class="stats">
+            <div class="next-piece-board">
+              <div class="next-text">
+                Next
+              </div>
+              <canvas id="next-puyo-canvas"></canvas>
+            </div>
+            <div class="score-board">
+              109809
+            </div>
+          </section>
         </section>
       </main>
       <footer>

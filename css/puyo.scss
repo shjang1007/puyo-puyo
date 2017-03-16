@@ -48,6 +48,14 @@ footer > ul > li {
   margin-right: 15px;
 }
 
+button {
+  color: magenta;
+}
+
+button:hover {
+  color: #e500e5;
+}
+
 .whole-container {
   font-family: "Days One", sans-serif;
   // font-family: 'Chewy', cursive;
@@ -151,10 +159,39 @@ footer > ul > li {
   text-align: center;
 }
 
-#pause-button {
-  color: magenta;
+.buttons {
+  display: flex;
+  margin-bottom: 20px;
 }
 
-#pause-button:hover {
-  color: #e500e5;
+.stats {
+  display: flex;
+}
+
+.next-text {
+  text-align: center;
+}
+
+.next-piece-board {
+  margin-bottom: 5px;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.score-board {
+  margin-left: 20px;
+  font-size: 24px;
+  align-self: flex-start;
+}
+
+#pause-button {
+  margin-top: 10px;
+}
+
+#restart-button {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  align-items: center;
 }

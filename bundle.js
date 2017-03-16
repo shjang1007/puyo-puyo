@@ -227,18 +227,28 @@ class Game {
     this.currentPuyos = null;
     this.ctx = ctx;
     this.paused = false;
+    this.over = false;
 
     const button = document.getElementById("pause-button");
     button.addEventListener("click", this.togglePauseButton);
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.togglePauseButton = this.togglePauseButton.bind(this);
+    this.resetGame = this.resetGame.bind(this);
+    this.gameOver = this.gameOver.bind(this);
   }
 
-  gameOver(reqAnimationId) {
+  gameOver() {
     if (this.board.occupied(3, 0)) {
-      cancelAnimationFrame(reqAnimationId);
+      this.over = true;
     }
+  }
+
+  resetGame() {
+    this.board = new __WEBPACK_IMPORTED_MODULE_1__board__["a" /* default */]();
+    this.currentPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
+    this.nextPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
+    this.over = false;
   }
 
   step() {
@@ -319,16 +329,28 @@ class GameView {
     this.game = game;
     this.ctx = ctx;
     this.nextPuyoCtx = nextPuyoCtx;
+    this.gameStart = null;
+
     this.play = this.play.bind(this);
+    this.resetGame = this.resetGame.bind(this);
   }
 
   play() {
     this.game.step();
     this.game.draw(this.ctx, this.nextPuyoCtx);
 
-    const gameStart = requestAnimationFrame(this.play);
+    if (!this.game.over) {
+      this.gameStart = requestAnimationFrame(this.play);
+    }
 
-    this.game.gameOver(gameStart);
+    this.game.gameOver();
+  }
+
+  resetGame() {
+    this.game.resetGame();
+
+    cancelAnimationFrame(this.gameStart);
+    this.play();
   }
 }
 
@@ -349,6 +371,7 @@ class Board {
     this.row = 12;
     this.grid = grid ? grid : this.createNewGrid(this.col, this.row);
     this.puyos = [];
+    this.score = 0;
   }
 
   createNewGrid(col, row) {
@@ -498,6 +521,11 @@ class Board {
       this.dropToEmptyPos();
     }
   }
+
+  resetBoardAndScore() {
+    this.createNewGrid(this.col, this.row);
+    this.score = 0;
+  }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = Board;
@@ -543,8 +571,8 @@ class SinglePuyo {
     const radialGradient = nextPuyoCtx.createRadialGradient(x - 4,
                                                             y - 4,
                                                             1,
-                                                            x,
-                                                            y,
+                                                            x - 2,
+                                                            y - 2,
                                                             20);
 
     radialGradient.addColorStop(0, "white");
@@ -631,9 +659,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */]();
   document.addEventListener("keydown", game.handleKeyDown);
+
   const pauseButton = document.getElementById("pause-button");
   pauseButton.addEventListener("mousedown", game.togglePauseButton);
-  new __WEBPACK_IMPORTED_MODULE_1__game_view__["a" /* default */](game, ctx, nextPuyoCtx).play();
+
+  const gameView = new __WEBPACK_IMPORTED_MODULE_1__game_view__["a" /* default */](game, ctx, nextPuyoCtx);
+  gameView.play();
+
+  const restartButton = document.getElementById("restart-button");
+  restartButton.addEventListener("mousedown", gameView.resetGame);
 });
 
 
