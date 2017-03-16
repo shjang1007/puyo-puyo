@@ -252,6 +252,7 @@ class Game {
   }
 
   step() {
+    document.getElementById("score").innerHTML = this.board.score;
     if (!this.paused) {
       if (!this.currentPuyos) {
         this.currentPuyos = new __WEBPACK_IMPORTED_MODULE_0__moving_puyos__["a" /* default */]();
@@ -406,6 +407,7 @@ class Board {
     }
     return unoccupiedBottom;
   }
+
   //this method is too long brian!
   drawBoard(ctx) {
     for (let row = 0; row < this.row; row++) {
@@ -463,6 +465,8 @@ class Board {
       }
 
       if (count >= 4) {
+        this.score += puyoToDestroy.length * 10;
+
         puyoToDestroy.forEach((puyoToDelete) => {
           this.grid[puyoToDelete.row][puyoToDelete.col] = null;
           const idx = this.puyos.indexOf(puyoToDelete);
