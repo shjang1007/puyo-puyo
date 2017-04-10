@@ -298,6 +298,7 @@ class Game {
 
   draw(ctx, nextPuyoCtx) {
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+    nextPuyoCtx.clearRect(0, 0, 50, 100);
     this.board.drawBoard(ctx);
     this.currentPuyos.drawPuyos(ctx);
     this.nextPuyos.drawNextPuyos(nextPuyoCtx);
@@ -561,8 +562,8 @@ class SinglePuyo {
     const { row, col, color } = this;
     ctx.beginPath();
 
-    const radialGradient = ctx.createRadialGradient(col * 40 + 18,
-                                                    row * 40 + 18,
+    const radialGradient = ctx.createRadialGradient(col * 40 + 17,
+                                                    row * 40 + 17,
                                                     1,
                                                     col * 40 + 20,
                                                     row * 40 + 20,
@@ -580,11 +581,11 @@ class SinglePuyo {
   drawNextPuyo(nextPuyoCtx, x, y, color) {
     nextPuyoCtx.beginPath();
 
-    const radialGradient = nextPuyoCtx.createRadialGradient(x - 4,
-                                                            y - 4,
+    const radialGradient = nextPuyoCtx.createRadialGradient(x - 3,
+                                                            y - 3,
                                                             1,
-                                                            x - 2,
-                                                            y - 2,
+                                                            x,
+                                                            y,
                                                             20);
 
     radialGradient.addColorStop(0, "white");
