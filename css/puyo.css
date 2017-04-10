@@ -7,11 +7,12 @@
 }
 
 body {
-
+  color: black;
 }
 
 header {
   display: flex;
+  color: #8d8d8d;
   max-width: 1200px;
   margin: 0 auto;
   justify-content: space-between;
@@ -25,6 +26,11 @@ header > ul {
 
 header > ul > li {
   margin-right: 15px;
+  transition: color 0.2s;
+}
+
+header > ul > li:hover {
+  color: #6f6f6f;
 }
 
 main {
@@ -50,6 +56,7 @@ footer > ul > li {
 
 button {
   color: magenta;
+  transition: color 0.2;
 }
 
 button:hover {
@@ -82,6 +89,10 @@ button:hover {
   color: magenta;
 }
 
+.title:hover {
+  text-decoration: underline;
+}
+
 .instruction-container {
   max-width: 400px;
   width: 100%;
@@ -98,14 +109,10 @@ button:hover {
 
 .play-symbol {
   text-align: center;
-  color: magenta;
   vertical-align: middle;
   font-weight: 900;
-  cursor: pointer;
-}
-
-.play-symbol:hover {
-  color: #e500e5;
+  width: 100%;
+  font-size: 14px;
 }
 
 .drop-down-instruction {
