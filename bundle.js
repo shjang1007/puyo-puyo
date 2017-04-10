@@ -264,7 +264,7 @@ class Game {
 
       const { mainPuyo, adjPuyo } = this.currentPuyos;
       if (this.speed < 0.13) {
-        this.speed += 0.00002;
+        this.speed += 0.000005;
       }
 
       this.currentPuyos.moveDown(this.speed);
@@ -305,6 +305,9 @@ class Game {
   }
 
   handleKeyDown(e) {
+    // Don't do anything if enter pressed
+    if (e.which === 13) return;
+
     // If puyo landed or the game is paused, disable moves
     if (this.currentPuyos.disableMoves() || this.paused) return;
 
@@ -339,6 +342,7 @@ class GameView {
     this.game = game;
     this.ctx = ctx;
     this.nextPuyoCtx = nextPuyoCtx;
+    this.start = false;
     this.gameStart = null;
 
     this.play = this.play.bind(this);
@@ -677,7 +681,17 @@ document.addEventListener("DOMContentLoaded", () => {
   pauseButton.addEventListener("mousedown", game.togglePauseButton);
 
   const gameView = new __WEBPACK_IMPORTED_MODULE_1__game_view__["a" /* default */](game, ctx, nextPuyoCtx);
-  gameView.play();
+
+  // Add event listener to close modal and start the game
+  document.addEventListener("keydown", (e) => {
+    if (!gameView.start && e.which === 13) {
+      document.getElementById("start-modal").style.display = "none";
+      gameView.start = true;
+      gameView.play();
+    }
+  });
+
+  // gameView.play();
 
   const restartButton = document.getElementById("restart-button");
   restartButton.addEventListener("mousedown", gameView.resetGame);
