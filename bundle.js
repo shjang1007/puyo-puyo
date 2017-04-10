@@ -241,9 +241,12 @@ class Game {
     const { ctx } = this;
     if (this.board.occupied(3, 0)) {
       this.over = true;
-      ctx.fillStyle = "orange";
-      ctx.font = "36px Arial";
-      ctx.fillText("GAME OVER", 10, Game.DIM_Y / 2);
+      document.getElementById("modal-container").style.display = "block";
+      document.getElementById("start-text").style.display = "none";
+      document.getElementById("end-text").style.display = "block";
+      // ctx.fillStyle = "orange";
+      // ctx.font = "36px Arial";
+      // ctx.fillText("GAME OVER", 10, Game.DIM_Y / 2);
     }
   }
 
@@ -685,9 +688,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add event listener to close modal and start the game
   document.addEventListener("keydown", (e) => {
     if (!gameView.start && e.which === 13) {
-      document.getElementById("start-modal").style.display = "none";
+      document.getElementById("modal-container").style.display = "none";
       gameView.start = true;
       gameView.play();
+    } else if (game.over && e.which === 13) {
+      document.getElementById("modal-container").style.display = "none";
+      gameView.resetGame();
     }
   });
 
