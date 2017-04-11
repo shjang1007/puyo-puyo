@@ -221,15 +221,16 @@ button:hover {
 
 /* Modal styling */
 .modal {
-    display: block;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    background-color: rgba(0,0,0,0.6);
+  color: #8d8d8d;
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  background-color: rgba(0,0,0,0.6);
 }
 
 .modal-content {
@@ -248,6 +249,7 @@ button:hover {
 }
 
 .modal-content > p {
+  margin-left: 17px;
   font-size: 14px;
 }
 
@@ -271,4 +273,15 @@ button:hover {
   border: 1px solid #faebd7;
   max-width: 500px;
   width: 70%;
+}
+
+.end-modal-content > p {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.end-modal-content > p > span {
+  padding: 5px;
+  border-radius: 4px;
+  background: white;
 }
