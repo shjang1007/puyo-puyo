@@ -213,6 +213,10 @@ button:hover {
   margin-top: 10px;
 }
 
+#mute-button {
+  margin-top: 10px;
+}
+
 #restart-button {
   display: flex;
   flex-direction: column;

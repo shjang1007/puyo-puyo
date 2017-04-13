@@ -225,14 +225,19 @@ class Game {
     this.currentPuyos = null;
     this.ctx = ctx;
     this.paused = false;
+    this.mute = false;
     this.over = false;
     this.speed = 0.03;
 
-    const button = document.getElementById("pause-button");
-    button.addEventListener("click", this.togglePauseButton);
+    const pauseButton = document.getElementById("pause-button");
+    pauseButton.addEventListener("click", this.togglePauseButton);
+
+    const muteButton = document.getElementById("mute-button");
+    muteButton.addEventListener("mousedown", this.toggleMuteButton);
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.togglePauseButton = this.togglePauseButton.bind(this);
+    this.toggleMuteButton = this.toggleMuteButton.bind(this);
     this.resetGame = this.resetGame.bind(this);
     this.gameOver = this.gameOver.bind(this);
   }
@@ -246,6 +251,9 @@ class Game {
       document.getElementById("end-text").style.display = "block";
       document.getElementById("bgm").pause();
       document.getElementById("bgm").currentTime = 0;
+    }
+
+    if (this.over && document.getElementById("sound-icon").className.includes("off")) {
       document.getElementById("game-over-music").play();
     }
   }
@@ -299,6 +307,21 @@ class Game {
     }
   }
 
+  toggleMuteButton(e) {
+    if (this.mute) {
+      this.mute = false;
+      document.getElementById("bgm").play();
+      $(e.target)
+        .replaceWith('<i id="sound-icon" class="fa fa-volume-off fa-fw fa-4x"></i>');
+    } else {
+      this.mute = true;
+      document.getElementById("bgm").pause();
+      $(e.target)
+        .replaceWith('<i id="sound-icon" class="fa fa-volume-up fa-fw fa-4x"></i>');
+
+    }
+  }
+
   draw(ctx, nextPuyoCtx) {
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
     nextPuyoCtx.clearRect(0, 0, 50, 100);
@@ -309,7 +332,7 @@ class Game {
 
   handleKeyDown(e) {
     // Don't do anything if enter pressed
-    if (!this.currentPuyos) return;
+    if (!this.currentPuyos || e.which === 13) return;
 
     // If puyo landed or the game is paused, disable moves
     if (this.currentPuyos.disableMoves() || this.paused) return;
@@ -695,9 +718,13 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (game.over && e.which === 13) {
       document.getElementById("modal-container").style.display = "none";
       gameView.resetGame();
+
       document.getElementById("game-over-music").pause();
       document.getElementById("game-over-music").currentTime = 0;
-      document.getElementById("bgm").play();
+
+      if (document.getElementById("sound-icon").className.includes("off")) {
+        document.getElementById("bgm").play();
+      }
     }
   });
 
