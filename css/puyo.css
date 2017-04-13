@@ -286,3 +286,7 @@ button:hover {
   border-radius: 4px;
   background: white;
 }
+
+audio {
+  transition: all 2s;
+}

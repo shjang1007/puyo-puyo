@@ -244,9 +244,9 @@ class Game {
       document.getElementById("modal-container").style.display = "block";
       document.getElementById("start-text").style.display = "none";
       document.getElementById("end-text").style.display = "block";
-      // ctx.fillStyle = "orange";
-      // ctx.font = "36px Arial";
-      // ctx.fillText("GAME OVER", 10, Game.DIM_Y / 2);
+      document.getElementById("bgm").pause();
+      document.getElementById("bgm").currentTime = 0;
+      document.getElementById("game-over-music").play();
     }
   }
 
@@ -691,9 +691,13 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("modal-container").style.display = "none";
       gameView.start = true;
       gameView.play();
+      document.getElementById("bgm").play();
     } else if (game.over && e.which === 13) {
       document.getElementById("modal-container").style.display = "none";
       gameView.resetGame();
+      document.getElementById("game-over-music").pause();
+      document.getElementById("game-over-music").currentTime = 0;
+      document.getElementById("bgm").play();
     }
   });
 
