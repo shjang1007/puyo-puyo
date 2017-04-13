@@ -1,61 +1,77 @@
-## JS Project Proposal: Puyo-Puyo
+# Puyo Puyo
 
-### Background
+Puyo-Puyo is a Tetris-like puzzle video game built using JavaScript and HTML5 Canvas.
 
-Puyo-Puyo is a Tetris-like puzzle video game. The game is played similar to the Tetris in that the player has to clear the falling blocks. The game follow these rules:
+[Play Puyo Puyo][puyopuyo]
 
-1) If you combined 4 or more of the same color of the pieces, it will pop and clear,
-2) With each stage, the speed of objects dropping will be faster,
-3) The goal is to get the highest score.
+[puyopuyo]: www.brianjang.us/puyo-puyo
 
-### Functionality & MVP  
+<img src="./img/puyo-puyo.gif" alt="homepage"/>
 
-With Puyo-Puyo, users will be able to:
+The game follow these rules:
+1. Combined 4 or more of the same color pieces to clear
+2. Velocity of the Puyo will increase as the time goes
+3. The goal is to get the highest score.
 
-- [ ] Start or pause the game board
-- [ ] Select where to place the dropping pieces
-- [ ] Toggle pieces to either fall down vertically or horizontally
-- [ ] Choose to drop down pieces straight down without having to wait for it to fall down
+## Features and Implementation
 
-In addition, this project will include:
+### Game rendering
+  - Incorporated `HTML5 Canvas` to render objects, and used `window.requestAnimationFrame` method to show smooth and polished motions of the objects
 
-- [ ] A production README
+  #### lib/game_view.js:
+  ```JavaScript
 
-### Wireframes
+  play() {
+    this.game.step();
+    this.game.draw(this.ctx, this.nextPuyoCtx);
 
-This app will consist of a single screen with game board, game directions, game controls, and nav links to the Github, and my LinkedIn. On the left will be game instructions along with the game control which will be two buttons, one for starting the game and the other for pausing the game. (These two buttons will also have hotkeys assigned to it). On the left side will be where nav links will be located.
+    if (!this.game.over) {
+      this.gameStart = requestAnimationFrame(this.play);
+    }
 
-<!-- ![wireframes](https://github.com/appacademy/ny-portfolio-curriculum/blob/master/javascript-project/js-proposal-wireframe.jpg) -->
+    this.game.gameOver();
+  }
+  ```
 
-### Architecture and Technologies
+### Puyo clear logic
+  This is where things get difficult. In Tetris, clearing logic is simple, clear lines. However, in Puyo Puyo, you have to check the entire board to see where four or more of the same color Puyos are together.
 
-This project will be implemented with the following technologies:
+  This is where `Breadth First Search` comes to rescue:
 
-- Vanilla JavaScript and `jQuery` for overall structure and game logic,
-- `Easel.js` with `HTML5 Canvas` for DOM manipulation and rendering,
-- Webpack to bundle and serve up the various scripts.
+  #### lib/board.js:
+  ```JavaScript
+  clearPuyos() {
+    this.puyos.forEach((puyo) => {
+      let count = 1;
+      let queue = [puyo];
+      let puyoToDestroy = [puyo];
+      let el;
+      while (queue.length > 0) {
+        el = queue.shift();
+        el.neighbors(this).forEach( (pos) => {
+          const neighbor = this.grid[pos[1]][pos[0]]
+          if (neighbor &&
+              el.color === neighbor.color &&
+              !puyoToDestroy.includes(neighbor)) {
+            count += 1;
+            queue.push(neighbor);
+            puyoToDestroy.push(neighbor);
+          }
+        });
+      }
 
-In addition to the webpack entry file, there will be two scripts involved in this project:
+      if (count >= 4) {
+        this.score += puyoToDestroy.length * 10;
 
-`board.js`: this script will handle the logic for creating and updating the necessary `Easel.js` elements and rendering them to the DOM.
-
-`piece.js`: this script will handle the logic for the pieces. A piece will be 2 X 1 2d array. Each will be able to toggle to position either vertically or horizontally. Each piece will have random colors from set colors.
-
-### Implementation Timeline
-
-**Day 1**: Setup all necessary Node modules, including getting webpack up and running and `Easel.js` installed.  Create `webpack.config.js` as well as `package.json`.  Write a basic entry file and the bare bones of two scripts outlined above.  Learn the basics of `Easel.js`.  Goals for the day:
-
-- Get a green bundle with `webpack`
-- Learn enough `Easel.js` to render an object to the `Canvas` element
-
-**Day 2**: Dedicate this day to learning the `Easel.js` API.  First, build out the `Piece` object to connect to the `Board` object.  Then, use `board.js` to create and render the board grid.
-
-**Day 3**: Create the game logic for moving the pieces, toggling the pieces, and determining the speed and color of the pieces.
-
-**Day 4**: Install the controls for the user to interact with the game.  Style the frontend, making it polished and professional.  Goals for the day:
-
-- Create controls for game speed, stop, start, shape color
-- Have a styled `Canvas`, nice looking controls and title
+        puyoToDestroy.forEach((puyoToDelete) => {
+          this.grid[puyoToDelete.row][puyoToDelete.col] = null;
+          const idx = this.puyos.indexOf(puyoToDelete);
+          this.puyos.splice(idx, 1);
+        });
+      }
+    });
+  }
+  ```
 
 
 ### Bonus features
