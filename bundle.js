@@ -267,7 +267,7 @@ class Game {
 
       const { mainPuyo, adjPuyo } = this.currentPuyos;
       if (this.speed < 0.13) {
-        this.speed += 0.000005;
+        this.speed += 0.000002;
       }
 
       this.currentPuyos.moveDown(this.speed);

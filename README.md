@@ -8,8 +8,8 @@ Puyo-Puyo is a Tetris-like puzzle video game built using JavaScript and HTML5 Ca
 
 <img src="./img/puyo-puyo.gif" alt="homepage"/>
 
-The game follow these rules:
-1. Combined 4 or more of the same color pieces to clear
+The game follows these rules:
+1. Combine 4 or more of the same color pieces to clear
 2. Velocity of the Puyo will increase as the time goes
 3. The goal is to get the highest score.
 
