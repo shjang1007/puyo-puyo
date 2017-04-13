@@ -2,9 +2,8 @@
 
 Puyo-Puyo is a Tetris-like puzzle video game built using JavaScript and HTML5 Canvas.
 
-[Play Puyo Puyo][puyopuyo]
 
-[puyopuyo]:(http://brianjang.us/puyo-puyo/){:target="_blank"}
+<a href="http://brianjang.us/puyo-puyo/" target="_blank" rel="noopener noreferrer">Play Puyo Puyo</a>
 
 <img src="./img/puyo-puyo.gif" alt="homepage"/>
 
