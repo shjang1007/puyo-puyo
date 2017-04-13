@@ -9,6 +9,7 @@
 body {
   color: black;
   font-family: "Days One", sans-serif;
+  background: #faebd7;
 }
 
 header {
@@ -73,7 +74,7 @@ button:hover {
 .whole-container {
   font-family: "Days One", sans-serif;
   // font-family: 'Chewy', cursive;
-  background: #faebd7;
+  /*background: #faebd7;*/
   max-width: 1200px;
   height: 100%;
   margin: 0 auto;
