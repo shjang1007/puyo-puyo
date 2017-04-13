@@ -224,6 +224,11 @@ button:hover {
   align-items: center;
 }
 
+#red-color {
+  color: red;
+  font-size: 9px;
+}
+
 /* Modal styling */
 .modal {
   color: #8d8d8d;
@@ -258,7 +263,7 @@ button:hover {
   font-size: 14px;
 }
 
-.modal-content > p:last-child {
+.enter-to-play {
   text-align: center;
 }
 
